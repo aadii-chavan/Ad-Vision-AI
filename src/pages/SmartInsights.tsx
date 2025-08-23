@@ -288,36 +288,38 @@ const SmartInsights: React.FC = () => {
             {insights && (
               <>
                 {/* Competitive Advantage Summary */}
-                <Card className="mb-8 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+                <Card className="mb-8 text-white">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-purple-900">
-                      <Star className="w-6 h-6" />
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                        <Star className="w-6 h-6 text-white" />
+                      </div>
                       Your Competitive Advantage
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="font-semibold text-purple-800 mb-2">Unique Positioning</h4>
-                        <p className="text-purple-700 bg-white p-3 rounded-lg border shadow-sm">
+                        <h4 className="font-semibold text-white/90 mb-2">Unique Positioning</h4>
+                        <p className="text-white bg-white/20 p-3 rounded-lg border border-white/30">
                           {insights.competitiveAdvantage.uniquePositioning}
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-purple-800 mb-2">Value Proposition</h4>
-                        <p className="text-purple-700 bg-white p-3 rounded-lg border shadow-sm">
+                        <h4 className="font-semibold text-white/90 mb-2">Value Proposition</h4>
+                        <p className="text-white bg-white/20 p-3 rounded-lg border border-white/30">
                           {insights.competitiveAdvantage.valueProposition}
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-purple-800 mb-2">Differentiation Strategy</h4>
-                        <p className="text-purple-700 bg-white p-3 rounded-lg border shadow-sm">
+                        <h4 className="font-semibold text-white/90 mb-2">Differentiation Strategy</h4>
+                        <p className="text-white bg-white/20 p-3 rounded-lg border border-white/30">
                           {insights.competitiveAdvantage.differentiationStrategy}
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-purple-800 mb-2">Target Audience</h4>
-                        <p className="text-purple-700 bg-white p-3 rounded-lg border shadow-sm">
+                        <h4 className="font-semibold text-white/90 mb-2">Target Audience</h4>
+                        <p className="text-white bg-white/20 p-3 rounded-lg border border-white/30">
                           {insights.competitiveAdvantage.targetAudience}
                         </p>
                       </div>
@@ -354,10 +356,12 @@ const SmartInsights: React.FC = () => {
                   <TabsContent value="competitive" className="space-y-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {Object.entries(insights.competitiveAnalysis).map(([key, items]) => (
-                        <Card key={key} className={`${getInsightColor(key)}`}>
+                        <Card key={key} className="text-white">
                           <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                              {getInsightIcon(key)}
+                            <CardTitle className="flex items-center gap-2 text-white">
+                              <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                                {getInsightIcon(key)}
+                              </div>
                               {key.charAt(0).toUpperCase() + key.slice(1)}
                             </CardTitle>
                           </CardHeader>
@@ -371,8 +375,8 @@ const SmartInsights: React.FC = () => {
                                   transition={{ delay: index * 0.1 }}
                                   className="flex items-start gap-2"
                                 >
-                                  <div className="w-2 h-2 rounded-full bg-current mt-2 flex-shrink-0"></div>
-                                  <span className="text-sm">{item}</span>
+                                  <div className="w-2 h-2 rounded-full bg-white mt-2 flex-shrink-0"></div>
+                                  <span className="text-sm text-white">{item}</span>
                                 </motion.li>
                               ))}
                             </ul>
@@ -386,13 +390,15 @@ const SmartInsights: React.FC = () => {
                   <TabsContent value="strategic" className="space-y-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {Object.entries(insights.strategicRecommendations).map(([key, items]) => (
-                        <Card key={key} className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+                        <Card key={key} className="text-white">
                           <CardHeader>
-                            <CardTitle className="flex items-center gap-2 text-blue-900">
-                              {key === 'marketingStrategy' && <Target className="w-5 h-5" />}
-                              {key === 'emotionalAppeal' && <Heart className="w-5 h-5" />}
-                              {key === 'hookOptimization' && <Zap className="w-5 h-5" />}
-                              {key === 'performanceOptimization' && <TrendingUp className="w-5 h-5" />}
+                            <CardTitle className="flex items-center gap-2 text-white">
+                              <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                                {key === 'marketingStrategy' && <Target className="w-5 h-5 text-white" />}
+                                {key === 'emotionalAppeal' && <Heart className="w-5 h-5 text-white" />}
+                                {key === 'hookOptimization' && <Zap className="w-5 h-5 text-white" />}
+                                {key === 'performanceOptimization' && <TrendingUp className="w-5 h-5 text-white" />}
+                              </div>
                               {key.replace(/([A-Z])/g, ' $1').trim()}
                             </CardTitle>
                           </CardHeader>
@@ -406,8 +412,8 @@ const SmartInsights: React.FC = () => {
                                   transition={{ delay: index * 0.1 }}
                                   className="flex items-start gap-2"
                                 >
-                                  <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0"></div>
-                                  <span className="text-sm text-blue-800">{item}</span>
+                                  <div className="w-2 h-2 rounded-full bg-white mt-2 flex-shrink-0"></div>
+                                  <span className="text-sm text-white">{item}</span>
                                 </motion.li>
                               ))}
                             </ul>
@@ -421,13 +427,15 @@ const SmartInsights: React.FC = () => {
                   <TabsContent value="creative" className="space-y-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {Object.entries(insights.creativeGuidelines).map(([key, items]) => (
-                        <Card key={key} className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+                        <Card key={key} className="text-white">
                           <CardHeader>
-                            <CardTitle className="flex items-center gap-2 text-green-900">
-                              {key === 'messaging' && <MessageSquare className="w-5 h-5" />}
-                              {key === 'visualElements' && <Palette className="w-5 h-5" />}
-                              {key === 'callToAction' && <Megaphone className="w-5 h-5" />}
-                              {key === 'toneOfVoice' && <Users className="w-5 h-5" />}
+                            <CardTitle className="flex items-center gap-2 text-white">
+                              <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                                {key === 'messaging' && <MessageSquare className="w-5 h-5 text-white" />}
+                                {key === 'visualElements' && <Palette className="w-5 h-5 text-white" />}
+                                {key === 'callToAction' && <Megaphone className="w-5 h-5 text-white" />}
+                                {key === 'toneOfVoice' && <Users className="w-5 h-5 text-white" />}
+                              </div>
                               {key.replace(/([A-Z])/g, ' $1').trim()}
                             </CardTitle>
                           </CardHeader>
@@ -441,8 +449,8 @@ const SmartInsights: React.FC = () => {
                                   transition={{ delay: index * 0.1 }}
                                   className="flex items-start gap-2"
                                 >
-                                  <div className="w-2 h-2 rounded-full bg-green-600 mt-2 flex-shrink-0"></div>
-                                  <span className="text-sm text-green-800">{item}</span>
+                                  <div className="w-2 h-2 rounded-full bg-white mt-2 flex-shrink-0"></div>
+                                  <span className="text-sm text-white">{item}</span>
                                 </motion.li>
                               ))}
                             </ul>
@@ -456,13 +464,15 @@ const SmartInsights: React.FC = () => {
                   <TabsContent value="implementation" className="space-y-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {Object.entries(insights.implementationPlan).map(([key, items]) => (
-                        <Card key={key} className="bg-gradient-to-br from-orange-50 to-red-50 border-orange-200">
+                        <Card key={key} className="text-white">
                           <CardHeader>
-                            <CardTitle className="flex items-center gap-2 text-orange-900">
-                              {key === 'immediateActions' && <Rocket className="w-5 h-5" />}
-                              {key === 'shortTermGoals' && <Clock className="w-5 h-5" />}
-                              {key === 'longTermStrategy' && <TrendingUp className="w-5 h-5" />}
-                              {key === 'successMetrics' && <Flag className="w-5 h-5" />}
+                            <CardTitle className="flex items-center gap-2 text-white">
+                              <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                                {key === 'immediateActions' && <Rocket className="w-5 h-5 text-white" />}
+                                {key === 'shortTermGoals' && <Clock className="w-5 h-5 text-white" />}
+                                {key === 'longTermStrategy' && <TrendingUp className="w-5 h-5 text-white" />}
+                                {key === 'successMetrics' && <Flag className="w-5 h-5 text-white" />}
+                              </div>
                               {key.replace(/([A-Z])/g, ' $1').trim()}
                             </CardTitle>
                           </CardHeader>
@@ -476,8 +486,8 @@ const SmartInsights: React.FC = () => {
                                   transition={{ delay: index * 0.1 }}
                                   className="flex items-start gap-2"
                                 >
-                                  <div className="w-2 h-2 rounded-full bg-orange-600 mt-2 flex-shrink-0"></div>
-                                  <span className="text-sm text-orange-800">{item}</span>
+                                  <div className="w-2 h-2 rounded-full bg-white mt-2 flex-shrink-0"></div>
+                                  <span className="text-sm text-white">{item}</span>
                                 </motion.li>
                               ))}
                             </ul>
@@ -489,39 +499,41 @@ const SmartInsights: React.FC = () => {
 
                   {/* Summary */}
                   <TabsContent value="summary" className="space-y-6">
-                    <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+                    <Card className="text-white">
                       <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-purple-900">
-                          <Award className="w-6 h-6" />
+                        <CardTitle className="flex items-center gap-2 text-white">
+                          <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                            <Award className="w-6 h-6 text-white" />
+                          </div>
                           Key Takeaways
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                           <div className="text-center">
-                            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <Target className="w-8 h-8 text-purple-600" />
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/30">
+                              <Target className="w-8 h-8 text-white" />
                             </div>
-                            <h4 className="font-semibold text-purple-900 mb-2">Focus Areas</h4>
-                            <p className="text-sm text-purple-700">
+                            <h4 className="font-semibold text-white/90 mb-2">Focus Areas</h4>
+                            <p className="text-sm text-white/80">
                               {insights.competitiveAdvantage.uniquePositioning}
                             </p>
                           </div>
                           <div className="text-center">
-                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <Rocket className="w-8 h-8 text-blue-600" />
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/30">
+                              <Rocket className="w-8 h-8 text-white" />
                             </div>
-                            <h4 className="font-semibold text-blue-900 mb-2">Next Steps</h4>
-                            <p className="text-sm text-blue-700">
+                            <h4 className="font-semibold text-white/90 mb-2">Next Steps</h4>
+                            <p className="text-sm text-white/80">
                               Start with immediate actions and build momentum
                             </p>
                           </div>
                           <div className="text-center">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <TrendingUp className="w-8 h-8 text-green-600" />
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/30">
+                              <TrendingUp className="w-8 h-8 text-white" />
                             </div>
-                            <h4 className="font-semibold text-green-900 mb-2">Success Path</h4>
-                            <p className="text-sm text-green-700">
+                            <h4 className="font-semibold text-white/90 mb-2">Success Path</h4>
+                            <p className="text-sm text-white/80">
                               Follow the implementation plan for optimal results
                             </p>
                           </div>
