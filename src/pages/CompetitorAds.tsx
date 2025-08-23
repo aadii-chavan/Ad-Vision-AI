@@ -4,15 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Slider } from '@/components/ui/slider';
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
-import { ChevronDown, Globe, Eye, BarChart2, DollarSign, Check, AlertCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from '@/components/ui/select';
+import { ChevronDown, Globe, Eye, BarChart2, DollarSign, Check, AlertCircle, Filter, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import Navbar from '@/components/Navbar';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
-// REMOVE: import { supabase } from '@/lib/supabaseClient';
 
 // --- Types ---
 interface Ad {
@@ -87,6 +86,7 @@ const CompetitorAds: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedAds, setSelectedAds] = useState<Ad[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const navigate = useNavigate();
 
   // --- Fetch Ads ---
@@ -191,22 +191,45 @@ const CompetitorAds: React.FC = () => {
     }
   };
 
+  // --- Get active filter count ---
+  const getActiveFilterCount = () => {
+    let count = 0;
+    if (selectedCountries.length > 0) count++;
+    if (selectedBusinessTypes.length > 0) count++;
+    if (selectedCategories.length > 0) count++;
+    if (impressions[0] > 0 || impressions[1] < 1000000) count++;
+    if (spend[0] > 0 || spend[1] < 100000) count++;
+    return count;
+  };
+
+  // --- Clear all filters ---
+  const clearAllFilters = () => {
+    setSelectedCountries([]);
+    setSelectedBusinessTypes([]);
+    setSelectedCategories([]);
+    setImpressions([0, 1000000]);
+    setSpend([0, 100000]);
+  };
+
   // --- UI ---
   return (
     <div className="min-h-screen bg-background text-foreground flex relative overflow-hidden">
       {/* Backgrounds, overlays, etc. */}
       <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 pointer-events-none"></div>
+      
       {/* Navbar */}
       <div className="fixed top-0 left-0 right-0 z-[100]">
         <Navbar />
       </div>
+      
       {/* Sidebar */}
       <div className="fixed left-0 top-0 h-screen z-[90] pt-20">
         <div className="h-full overflow-y-auto">
           <DashboardSidebar />
         </div>
       </div>
+      
       {/* Main Content */}
       <div className="flex-1 ml-64 pt-20 relative z-10">
         <div className="h-full overflow-y-auto">
@@ -253,156 +276,186 @@ const CompetitorAds: React.FC = () => {
               </motion.div>
             )}
 
-            {/* Search & Filters */}
+            {/* Header Section */}
             <div className="mb-8">
-              {/* Main Search Bar */}
-              <div className="flex gap-4 mb-6">
-                <div className="flex-1 relative">
-                  <Input
-                    placeholder="Search ads by keyword, business type, or category..."
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    className="w-full pl-4 pr-12 h-12 text-base"
-                  />
-                  <Button 
-                    onClick={() => { setPage(1); fetchAds({ append: false }); }}
-                    className="absolute right-2 top-2 h-8 px-4"
-                    size="sm"
-                  >
-                    Search
-                  </Button>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">Competitor Ads</h1>
+                  <p className="text-gray-600 mt-1">Discover and analyze competitor advertising strategies</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  {/* Filter Button */}
+                  <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+                    <DialogTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        className="flex items-center gap-2 px-4 py-2 border-2 hover:border-primary/50 transition-colors"
+                      >
+                        <Filter className="w-4 h-4" />
+                        Filters
+                        {getActiveFilterCount() > 0 && (
+                          <Badge variant="secondary" className="ml-1 text-xs">
+                            {getActiveFilterCount()}
+                          </Badge>
+                        )}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center justify-between">
+                          <span>Advanced Filters</span>
+                          {getActiveFilterCount() > 0 && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={clearAllFilters}
+                              className="text-sm text-gray-500 hover:text-gray-700"
+                            >
+                              Clear All
+                            </Button>
+                          )}
+                        </DialogTitle>
+                      </DialogHeader>
+                      
+                      <div className="space-y-6 py-4">
+                        {/* Country Filter */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">Country</label>
+                          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                            {COUNTRY_OPTIONS.map(opt => (
+                              <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedCountries.includes(opt.value)}
+                                  onChange={() => handleCountryChange(opt.value)}
+                                  className="rounded border-gray-300 text-primary focus:ring-primary"
+                                />
+                                <span className="text-sm text-gray-700">{opt.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Business Type Filter */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">Business Type</label>
+                          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                            {BUSINESS_TYPE_OPTIONS.map(opt => (
+                              <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedBusinessTypes.includes(opt.value)}
+                                  onChange={() => handleBusinessTypeChange(opt.value)}
+                                  className="rounded border-gray-300 text-primary focus:ring-primary"
+                                />
+                                <span className="text-sm text-gray-700">{opt.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Category Filter */}
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-3">Category</label>
+                          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                            {CATEGORY_OPTIONS.map(opt => (
+                              <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedCategories.includes(opt.value)}
+                                  onChange={() => handleCategoryChange(opt.value)}
+                                  className="rounded border-gray-300 text-primary focus:ring-primary"
+                                />
+                                <span className="text-sm text-gray-700">{opt.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Range Filters */}
+                        <div className="grid grid-cols-2 gap-4">
+                          {/* Impressions Range */}
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Impressions Range</label>
+                            <div className="space-y-2">
+                              <Input
+                                type="number"
+                                placeholder="Min"
+                                value={impressions[0] || ''}
+                                onChange={e => setImpressions([+e.target.value || 0, impressions[1]])}
+                                className="w-full"
+                              />
+                              <Input
+                                type="number"
+                                placeholder="Max"
+                                value={impressions[1] || ''}
+                                onChange={e => setImpressions([impressions[0], +e.target.value || 1000000])}
+                                className="w-full"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Spend Range */}
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Spend Range ($)</label>
+                            <div className="space-y-2">
+                              <Input
+                                type="number"
+                                placeholder="Min"
+                                value={spend[0] || ''}
+                                onChange={e => setSpend([+e.target.value || 0, spend[1]])}
+                                className="w-full"
+                              />
+                              <Input
+                                type="number"
+                                placeholder="Max"
+                                value={spend[1] || ''}
+                                onChange={e => setSpend([spend[0], +e.target.value || 100000])}
+                                className="w-full"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end gap-3 pt-4 border-t">
+                        <Button
+                          variant="outline"
+                          onClick={() => setFilterOpen(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            setPage(1);
+                            fetchAds({ append: false });
+                            setFilterOpen(false);
+                          }}
+                          className="px-6"
+                        >
+                          Apply Filters
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
 
-              {/* Filters Section */}
-              <div className="bg-card border rounded-lg p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => {
-                      setSelectedCountries([]);
-                      setSelectedBusinessTypes([]);
-                      setSelectedCategories([]);
-                      setImpressions([0, 1000000]);
-                      setSpend([0, 100000]);
-                    }}
-                  >
-                    Clear All
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {/* Country Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
-                      {COUNTRY_OPTIONS.map(opt => (
-                        <label key={opt.value} className="flex items-center space-x-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={selectedCountries.includes(opt.value)}
-                            onChange={() => handleCountryChange(opt.value)}
-                            className="rounded border-gray-300 text-primary focus:ring-primary"
-                          />
-                          <span className="text-sm text-gray-700">{opt.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Business Type Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Business Type</label>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
-                      {BUSINESS_TYPE_OPTIONS.map(opt => (
-                        <label key={opt.value} className="flex items-center space-x-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={selectedBusinessTypes.includes(opt.value)}
-                            onChange={() => handleBusinessTypeChange(opt.value)}
-                            className="rounded border-gray-300 text-primary focus:ring-primary"
-                          />
-                          <span className="text-sm text-gray-700">{opt.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Category Filter */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
-                      {CATEGORY_OPTIONS.map(opt => (
-                        <label key={opt.value} className="flex items-center space-x-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={selectedCategories.includes(opt.value)}
-                            onChange={() => handleCategoryChange(opt.value)}
-                            className="rounded border-gray-300 text-primary focus:ring-primary"
-                          />
-                          <span className="text-sm text-gray-700">{opt.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Range Filters */}
-                  <div className="space-y-4">
-                    {/* Impressions Range */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Impressions Range</label>
-                      <div className="space-y-2">
-                        <Input
-                          type="number"
-                          placeholder="Min"
-                          value={impressions[0] || ''}
-                          onChange={e => setImpressions([+e.target.value || 0, impressions[1]])}
-                          className="w-full"
-                        />
-                        <Input
-                          type="number"
-                          placeholder="Max"
-                          value={impressions[1] || ''}
-                          onChange={e => setImpressions([impressions[0], +e.target.value || 1000000])}
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Spend Range */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Spend Range ($)</label>
-                      <div className="space-y-2">
-                        <Input
-                          type="number"
-                          placeholder="Min"
-                          value={spend[0] || ''}
-                          onChange={e => setSpend([+e.target.value || 0, spend[1]])}
-                          className="w-full"
-                        />
-                        <Input
-                          type="number"
-                          placeholder="Max"
-                          value={spend[1] || ''}
-                          onChange={e => setSpend([spend[0], +e.target.value || 100000])}
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Apply Filters Button */}
-                <div className="mt-6 flex justify-end">
-                  <Button 
-                    onClick={() => { setPage(1); fetchAds({ append: false }); }}
-                    className="px-8"
-                  >
-                    Apply Filters
-                  </Button>
-                </div>
+              {/* Search Bar */}
+              <div className="relative">
+                <Input
+                  placeholder="Search ads by keyword, business type, or category..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="w-full pl-4 pr-24 h-12 text-base border-2 focus:border-primary/50 transition-colors"
+                />
+                <Button 
+                  onClick={() => { setPage(1); fetchAds({ append: false }); }}
+                  className="absolute right-2 top-2 h-8 px-4 bg-primary hover:bg-primary/90"
+                  size="sm"
+                >
+                  Search
+                </Button>
               </div>
             </div>
             
@@ -430,8 +483,8 @@ const CompetitorAds: React.FC = () => {
                     >
                       <Card 
                         className={cn(
-                          "rounded-xl shadow-md flex flex-col h-full cursor-pointer transition-all duration-200 hover:shadow-lg",
-                          isAdSelected(ad) && "ring-2 ring-primary bg-primary/5"
+                          "rounded-xl shadow-md flex flex-col h-full cursor-pointer transition-all duration-200 hover:shadow-lg border-2 hover:border-primary/20",
+                          isAdSelected(ad) && "ring-2 ring-primary bg-primary/5 border-primary"
                         )}
                         onClick={() => handleAdSelection(ad)}
                       >
@@ -475,7 +528,7 @@ const CompetitorAds: React.FC = () => {
                           <Button 
                             asChild 
                             variant="outline" 
-                            className="w-full mt-auto"
+                            className="w-full mt-auto hover:bg-primary/5 hover:border-primary/30 transition-colors"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <a href={ad.ad_snapshot_url} target="_blank" rel="noopener noreferrer">
@@ -489,6 +542,7 @@ const CompetitorAds: React.FC = () => {
                 </AnimatePresence>
               )}
             </div>
+            
             {/* Load More */}
             {hasMore && !loading && (
               <div className="flex justify-center mt-8">
@@ -502,6 +556,7 @@ const CompetitorAds: React.FC = () => {
                 <Skeleton className="h-10 w-32 rounded-full" />
               </div>
             )}
+            
             {/* No Results */}
             {!loading && ads.length === 0 && (
               <div className="text-center text-muted-foreground py-16 text-lg">No ads found for your search.</div>
