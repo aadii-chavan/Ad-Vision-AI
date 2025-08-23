@@ -287,8 +287,8 @@ const CompetitorAds: React.FC = () => {
                   {/* Filter Button */}
                   <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
                     <DialogTrigger asChild>
-                      <Button 
-                        variant="outline" 
+                  <Button 
+                    variant="outline" 
                         className="flex items-center gap-2 px-4 py-2 border-2 hover:border-primary/50 transition-colors"
                       >
                         <Filter className="w-4 h-4" />
@@ -307,116 +307,116 @@ const CompetitorAds: React.FC = () => {
                           {getActiveFilterCount() > 0 && (
                             <Button
                               variant="ghost"
-                              size="sm"
+                    size="sm"
                               onClick={clearAllFilters}
                               className="text-sm text-gray-500 hover:text-gray-700"
-                            >
-                              Clear All
-                            </Button>
+                  >
+                    Clear All
+                  </Button>
                           )}
                         </DialogTitle>
                       </DialogHeader>
-                      
+
                       <div className="space-y-6 py-4">
-                        {/* Country Filter */}
-                        <div>
+                  {/* Country Filter */}
+                  <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">Country</label>
                           <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                            {COUNTRY_OPTIONS.map(opt => (
+                      {COUNTRY_OPTIONS.map(opt => (
                               <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedCountries.includes(opt.value)}
-                                  onChange={() => handleCountryChange(opt.value)}
-                                  className="rounded border-gray-300 text-primary focus:ring-primary"
-                                />
-                                <span className="text-sm text-gray-700">{opt.label}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
+                          <input
+                            type="checkbox"
+                            checked={selectedCountries.includes(opt.value)}
+                            onChange={() => handleCountryChange(opt.value)}
+                            className="rounded border-gray-300 text-primary focus:ring-primary"
+                          />
+                          <span className="text-sm text-gray-700">{opt.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
 
-                        {/* Business Type Filter */}
-                        <div>
+                  {/* Business Type Filter */}
+                  <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">Business Type</label>
                           <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                            {BUSINESS_TYPE_OPTIONS.map(opt => (
+                      {BUSINESS_TYPE_OPTIONS.map(opt => (
                               <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedBusinessTypes.includes(opt.value)}
-                                  onChange={() => handleBusinessTypeChange(opt.value)}
-                                  className="rounded border-gray-300 text-primary focus:ring-primary"
-                                />
-                                <span className="text-sm text-gray-700">{opt.label}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
+                          <input
+                            type="checkbox"
+                            checked={selectedBusinessTypes.includes(opt.value)}
+                            onChange={() => handleBusinessTypeChange(opt.value)}
+                            className="rounded border-gray-300 text-primary focus:ring-primary"
+                          />
+                          <span className="text-sm text-gray-700">{opt.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
 
-                        {/* Category Filter */}
-                        <div>
+                  {/* Category Filter */}
+                  <div>
                           <label className="block text-sm font-medium text-gray-700 mb-3">Category</label>
                           <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                            {CATEGORY_OPTIONS.map(opt => (
+                      {CATEGORY_OPTIONS.map(opt => (
                               <label key={opt.value} className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedCategories.includes(opt.value)}
-                                  onChange={() => handleCategoryChange(opt.value)}
-                                  className="rounded border-gray-300 text-primary focus:ring-primary"
-                                />
-                                <span className="text-sm text-gray-700">{opt.label}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
+                          <input
+                            type="checkbox"
+                            checked={selectedCategories.includes(opt.value)}
+                            onChange={() => handleCategoryChange(opt.value)}
+                            className="rounded border-gray-300 text-primary focus:ring-primary"
+                          />
+                          <span className="text-sm text-gray-700">{opt.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
 
-                        {/* Range Filters */}
+                  {/* Range Filters */}
                         <div className="grid grid-cols-2 gap-4">
-                          {/* Impressions Range */}
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Impressions Range</label>
-                            <div className="space-y-2">
-                              <Input
-                                type="number"
-                                placeholder="Min"
-                                value={impressions[0] || ''}
-                                onChange={e => setImpressions([+e.target.value || 0, impressions[1]])}
-                                className="w-full"
-                              />
-                              <Input
-                                type="number"
-                                placeholder="Max"
-                                value={impressions[1] || ''}
-                                onChange={e => setImpressions([impressions[0], +e.target.value || 1000000])}
-                                className="w-full"
-                              />
-                            </div>
-                          </div>
-
-                          {/* Spend Range */}
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Spend Range ($)</label>
-                            <div className="space-y-2">
-                              <Input
-                                type="number"
-                                placeholder="Min"
-                                value={spend[0] || ''}
-                                onChange={e => setSpend([+e.target.value || 0, spend[1]])}
-                                className="w-full"
-                              />
-                              <Input
-                                type="number"
-                                placeholder="Max"
-                                value={spend[1] || ''}
-                                onChange={e => setSpend([spend[0], +e.target.value || 100000])}
-                                className="w-full"
-                              />
-                            </div>
-                          </div>
-                        </div>
+                    {/* Impressions Range */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Impressions Range</label>
+                      <div className="space-y-2">
+                        <Input
+                          type="number"
+                          placeholder="Min"
+                          value={impressions[0] || ''}
+                          onChange={e => setImpressions([+e.target.value || 0, impressions[1]])}
+                          className="w-full"
+                        />
+                        <Input
+                          type="number"
+                          placeholder="Max"
+                          value={impressions[1] || ''}
+                          onChange={e => setImpressions([impressions[0], +e.target.value || 1000000])}
+                          className="w-full"
+                        />
                       </div>
+                    </div>
+
+                    {/* Spend Range */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Spend Range ($)</label>
+                      <div className="space-y-2">
+                        <Input
+                          type="number"
+                          placeholder="Min"
+                          value={spend[0] || ''}
+                          onChange={e => setSpend([+e.target.value || 0, spend[1]])}
+                          className="w-full"
+                        />
+                        <Input
+                          type="number"
+                          placeholder="Max"
+                          value={spend[1] || ''}
+                          onChange={e => setSpend([spend[0], +e.target.value || 100000])}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                       <div className="flex justify-end gap-3 pt-4 border-t">
                         <Button
@@ -425,16 +425,16 @@ const CompetitorAds: React.FC = () => {
                         >
                           Cancel
                         </Button>
-                        <Button
+                  <Button 
                           onClick={() => {
                             setPage(1);
                             fetchAds({ append: false });
                             setFilterOpen(false);
                           }}
                           className="px-6"
-                        >
-                          Apply Filters
-                        </Button>
+                  >
+                    Apply Filters
+                  </Button>
                       </div>
                     </DialogContent>
                   </Dialog>

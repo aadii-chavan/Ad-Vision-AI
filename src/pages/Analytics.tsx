@@ -292,66 +292,110 @@ const Analytics: React.FC = () => {
 
             {/* Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <Card className="text-white">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-blue-600">Avg Engagement</p>
-                      <p className="text-2xl font-bold text-blue-900">
-                        {analysis.length > 0 
-                          ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.estimatedEngagement, 0) / analysis.length)
-                          : 0}%
-                      </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-lg bg-white/20 border border-white/30">
+                      <Activity className="w-6 h-6 text-white" />
                     </div>
-                    <Activity className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white/80 mb-1">Avg Engagement</p>
+                    <p className="text-3xl font-bold text-white">
+                      {analysis.length > 0 
+                        ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.estimatedEngagement, 0) / analysis.length)
+                        : 0}%
+                    </p>
+                    <div className="mt-3">
+                      <Progress 
+                        value={analysis.length > 0 
+                          ? analysis.reduce((sum, item) => sum + item.performanceMetrics.estimatedEngagement, 0) / analysis.length
+                          : 0
+                        } 
+                        className="h-2"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <Card className="text-white">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-green-600">Avg Conversion</p>
-                      <p className="text-2xl font-bold text-green-900">
-                        {analysis.length > 0 
-                          ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.conversionPotential, 0) / analysis.length)
-                          : 0}%
-                      </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-lg bg-white/20 border border-white/30">
+                      <TrendingUp className="w-6 h-6 text-white" />
                     </div>
-                    <TrendingUp className="w-8 h-8 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white/80 mb-1">Avg Conversion</p>
+                    <p className="text-3xl font-bold text-white">
+                      {analysis.length > 0 
+                        ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.conversionPotential, 0) / analysis.length)
+                        : 0}%
+                    </p>
+                    <div className="mt-3">
+                      <Progress 
+                        value={analysis.length > 0 
+                          ? analysis.reduce((sum, item) => sum + item.performanceMetrics.conversionPotential, 0) / analysis.length
+                          : 0
+                        } 
+                        className="h-2"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+              <Card className="text-white">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-purple-600">Avg Virality</p>
-                      <p className="text-2xl font-bold text-purple-900">
-                        {analysis.length > 0 
-                          ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.viralityScore, 0) / analysis.length)
-                          : 0}%
-                      </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-lg bg-white/20 border border-white/30">
+                      <Zap className="w-6 h-6 text-white" />
                     </div>
-                    <Zap className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white/80 mb-1">Avg Virality</p>
+                    <p className="text-3xl font-bold text-white">
+                      {analysis.length > 0 
+                        ? Math.round(analysis.reduce((sum, item) => sum + item.performanceMetrics.viralityScore, 0) / analysis.length)
+                        : 0}%
+                    </p>
+                    <div className="mt-3">
+                      <Progress 
+                        value={analysis.length > 0 
+                          ? analysis.reduce((sum, item) => sum + item.performanceMetrics.viralityScore, 0) / analysis.length
+                          : 0
+                        } 
+                        className="h-2"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+              <Card className="text-white">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-orange-600">Avg Emotion</p>
-                      <p className="text-2xl font-bold text-orange-900">
-                        {analysis.length > 0 
-                          ? Math.round(analysis.reduce((sum, item) => sum + item.emotionalAnalysis.emotionalScore, 0) / analysis.length)
-                          : 0}%
-                      </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 rounded-lg bg-white/20 border border-white/30">
+                      <Heart className="w-6 h-6 text-white" />
                     </div>
-                    <Heart className="w-8 h-8 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white/80 mb-1">Avg Emotion</p>
+                    <p className="text-3xl font-bold text-white">
+                      {analysis.length > 0 
+                        ? Math.round(analysis.reduce((sum, item) => sum + item.emotionalAnalysis.emotionalScore, 0) / analysis.length)
+                        : 0}%
+                    </p>
+                    <div className="mt-3">
+                      <Progress 
+                        value={analysis.length > 0 
+                          ? analysis.reduce((sum, item) => sum + item.emotionalAnalysis.emotionalScore, 0) / analysis.length
+                          : 0
+                        } 
+                        className="h-2"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -477,20 +521,27 @@ const Analytics: React.FC = () => {
                     transition={{ delay: index * 0.1 }}
                   >
                     {/* Ad Preview */}
-                    <Card className="mb-6 bg-gradient-to-r from-gray-50 to-gray-100">
+                    <Card className="mb-6 text-white">
                       <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                          <span>Ad Preview</span>
+                        <CardTitle className="flex items-center justify-between text-white">
+                          <span className="flex items-center gap-2">
+                            <Eye className="w-5 h-5 text-white" />
+                            Ad Preview
+                          </span>
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="bg-white">{adAnalysis.ad.business_type}</Badge>
-                            <Badge variant="outline" className="bg-white">{adAnalysis.ad.category}</Badge>
+                            <Badge variant="outline" className="bg-white/20 text-white border-white/30">
+                              {adAnalysis.ad.business_type}
+                            </Badge>
+                            <Badge variant="outline" className="bg-white/20 text-white border-white/30">
+                              {adAnalysis.ad.category}
+                            </Badge>
                           </div>
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className="bg-white rounded-lg p-4 mb-4 border shadow-sm">
-                          <p className="text-gray-700 mb-2">{adAnalysis.ad.ad_creative_body}</p>
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="bg-white/20 rounded-lg p-4 mb-4 border border-white/30">
+                          <p className="text-white mb-3 leading-relaxed">{adAnalysis.ad.ad_creative_body}</p>
+                          <div className="flex items-center gap-4 text-sm text-white/80">
                             <span className="flex items-center gap-1">
                               <Eye className="w-4 h-4" />
                               {adAnalysis.ad.impressions.toLocaleString()} impressions
@@ -501,7 +552,7 @@ const Analytics: React.FC = () => {
                             </span>
                           </div>
                         </div>
-                        <Button asChild variant="outline" className="w-full bg-white">
+                        <Button asChild variant="outline" className="w-full hover:bg-white/20 hover:border-white/40 transition-colors bg-white/20 border-white/30 text-white">
                           <a href={adAnalysis.ad.ad_snapshot_url} target="_blank" rel="noopener noreferrer">
                             <Eye className="w-4 h-4 mr-2" />
                             View Original Ad
@@ -513,29 +564,31 @@ const Analytics: React.FC = () => {
                     {/* Analysis Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Marketing Strategy */}
-                      <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+                      <Card className="text-white">
                         <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-blue-900">
-                            <Target className="w-5 h-5" />
+                          <CardTitle className="flex items-center gap-2 text-white">
+                            <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                              <Target className="w-5 h-5 text-white" />
+                            </div>
                             Marketing Strategy
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                           <div>
-                            <h4 className="font-semibold mb-2 text-blue-800">Primary Strategy</h4>
-                            <Badge className="bg-blue-200 text-blue-800 border-blue-300">
+                            <h4 className="font-semibold mb-2 text-white/90">Primary Strategy</h4>
+                            <Badge className="bg-white/20 text-white border border-white/30 px-3 py-1">
                               {adAnalysis.marketingStrategy.primaryStrategy}
                             </Badge>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-blue-800">Call to Action</h4>
-                            <p className="text-sm bg-white p-3 rounded-lg border shadow-sm text-gray-700">
+                            <h4 className="font-semibold mb-2 text-white/90">Call to Action</h4>
+                            <p className="text-sm bg-white/20 p-3 rounded-lg border border-white/30 text-white">
                               {adAnalysis.marketingStrategy.callToAction}
                             </p>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-blue-800">Value Proposition</h4>
-                            <p className="text-sm bg-white p-3 rounded-lg border shadow-sm text-gray-700">
+                            <h4 className="font-semibold mb-2 text-white/90">Value Proposition</h4>
+                            <p className="text-sm bg-white/20 p-3 rounded-lg border border-white/30 text-white">
                               {adAnalysis.marketingStrategy.valueProposition}
                             </p>
                           </div>
@@ -543,32 +596,34 @@ const Analytics: React.FC = () => {
                       </Card>
 
                       {/* Emotional Analysis */}
-                      <Card className="bg-gradient-to-br from-red-50 to-red-100 border-red-200">
+                      <Card className="text-white">
                         <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-red-900">
-                            <Heart className="w-5 h-5" />
+                          <CardTitle className="flex items-center gap-2 text-white">
+                            <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                              <Heart className="w-5 h-5 text-white" />
+                            </div>
                             Emotional Analysis
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                           <div>
-                            <h4 className="font-semibold mb-2 text-red-800">Primary Emotion</h4>
-                            <Badge className="bg-red-200 text-red-800 border-red-300">
+                            <h4 className="font-semibold mb-2 text-white/90">Primary Emotion</h4>
+                            <Badge className="bg-white/20 text-white border border-white/30 px-3 py-1">
                               {adAnalysis.emotionalAnalysis.primaryEmotion}
                             </Badge>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-red-800">Emotional Score</h4>
-                            <Progress value={adAnalysis.emotionalAnalysis.emotionalScore} className="mb-2" />
-                            <span className="text-sm text-red-700">
+                            <h4 className="font-semibold mb-2 text-white/90">Emotional Score</h4>
+                            <Progress value={adAnalysis.emotionalAnalysis.emotionalScore} className="mb-2 h-2" />
+                            <span className="text-sm text-white/80">
                               {adAnalysis.emotionalAnalysis.emotionalScore.toFixed(1)}/100
                             </span>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-red-800">Emotional Triggers</h4>
+                            <h4 className="font-semibold mb-2 text-white/90">Emotional Triggers</h4>
                             <div className="space-y-1">
                               {adAnalysis.emotionalAnalysis.emotionalTriggers.map((trigger, i) => (
-                                <Badge key={i} variant="secondary" className="mr-1 bg-white text-red-700 border-red-300">
+                                <Badge key={i} variant="secondary" className="mr-1 bg-white/20 text-white border-white/30">
                                   {trigger}
                                 </Badge>
                               ))}
@@ -578,17 +633,19 @@ const Analytics: React.FC = () => {
                       </Card>
 
                       {/* Sentiment Analysis */}
-                      <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+                      <Card className="text-white">
                         <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-green-900">
-                            <MessageSquare className="w-5 h-5" />
+                          <CardTitle className="flex items-center gap-2 text-white">
+                            <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                              <MessageSquare className="w-5 h-5 text-white" />
+                            </div>
                             Sentiment Analysis
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                           <div>
-                            <h4 className="font-semibold mb-2 text-green-800">Overall Sentiment</h4>
-                            <Badge className={`${getSentimentColor(adAnalysis.sentimentAnalysis.overallSentiment)} border-green-300`}>
+                            <h4 className="font-semibold mb-2 text-white/90">Overall Sentiment</h4>
+                            <Badge className={`${getSentimentColor(adAnalysis.sentimentAnalysis.overallSentiment)} border-white/30 px-3 py-1`}>
                               <span className="flex items-center gap-1">
                                 {getSentimentIcon(adAnalysis.sentimentAnalysis.overallSentiment)}
                                 {adAnalysis.sentimentAnalysis.overallSentiment}
@@ -596,22 +653,22 @@ const Analytics: React.FC = () => {
                             </Badge>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-green-800">Sentiment Score</h4>
+                            <h4 className="font-semibold mb-2 text-white/90">Sentiment Score</h4>
                             <div className="flex items-center gap-2">
                               <Progress 
                                 value={Math.abs(adAnalysis.sentimentAnalysis.sentimentScore)} 
-                                className="flex-1"
+                                className="flex-1 h-2"
                               />
-                              <span className="text-sm font-mono text-green-700">
+                              <span className="text-sm font-mono text-white/80">
                                 {adAnalysis.sentimentAnalysis.sentimentScore.toFixed(1)}
                               </span>
                             </div>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-green-800">Key Phrases</h4>
+                            <h4 className="font-semibold mb-2 text-white/90">Key Phrases</h4>
                             <div className="space-y-1">
                               {adAnalysis.sentimentAnalysis.keyPhrases.map((phrase, i) => (
-                                <Badge key={i} variant="outline" className="mr-1 bg-white text-green-700 border-green-300">
+                                <Badge key={i} variant="outline" className="mr-1 bg-white/20 text-white border-white/30">
                                   {phrase}
                                 </Badge>
                               ))}
@@ -621,30 +678,32 @@ const Analytics: React.FC = () => {
                       </Card>
 
                       {/* Hooks Analysis */}
-                      <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+                      <Card className="text-white">
                         <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-orange-900">
-                            <Zap className="w-5 h-5" />
+                          <CardTitle className="flex items-center gap-2 text-white">
+                            <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                              <Zap className="w-5 h-5 text-white" />
+                            </div>
                             Hooks Analysis
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                           <div>
-                            <h4 className="font-semibold mb-2 text-orange-800">Primary Hook</h4>
-                            <p className="text-sm bg-white p-3 rounded-lg border shadow-sm text-gray-700 italic">
+                            <h4 className="font-semibold mb-2 text-white/90">Primary Hook</h4>
+                            <p className="text-sm bg-white/20 p-3 rounded-lg border border-white/30 text-white italic">
                               "{adAnalysis.hooks.primaryHook}"
                             </p>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-orange-800">Hook Type</h4>
-                            <Badge className="bg-orange-200 text-orange-800 border-orange-300">
+                            <h4 className="font-semibold mb-2 text-white/90">Hook Type</h4>
+                            <Badge className="bg-white/20 text-white border border-white/30 px-3 py-1">
                               {adAnalysis.hooks.hookType.replace('_', ' ')}
                             </Badge>
                           </div>
                           <div>
-                            <h4 className="font-semibold mb-2 text-orange-800">Effectiveness</h4>
-                            <Progress value={adAnalysis.hooks.hookEffectiveness} className="mb-2" />
-                            <span className="text-sm text-orange-700">
+                            <h4 className="font-semibold mb-2 text-white/90">Effectiveness</h4>
+                            <Progress value={adAnalysis.hooks.hookEffectiveness} className="mb-2 h-2" />
+                            <span className="text-sm text-white/80">
                               {adAnalysis.hooks.hookEffectiveness.toFixed(1)}/100
                             </span>
                           </div>
@@ -652,10 +711,12 @@ const Analytics: React.FC = () => {
                       </Card>
 
                       {/* Performance Metrics */}
-                      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 lg:col-span-2">
+                      <Card className="text-white lg:col-span-2">
                         <CardHeader>
-                          <CardTitle className="flex items-center gap-2 text-purple-900">
-                            <TrendingUp className="w-5 h-5" />
+                          <CardTitle className="flex items-center gap-2 text-white">
+                            <div className="p-2 rounded-lg bg-white/20 border border-white/30">
+                              <TrendingUp className="w-5 h-5 text-white" />
+                            </div>
                             Performance Metrics
                           </CardTitle>
                         </CardHeader>
@@ -663,31 +724,37 @@ const Analytics: React.FC = () => {
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="text-center">
                               <div className="mb-4">
-                                <Activity className="w-12 h-12 text-purple-600 mx-auto mb-2" />
-                                <h4 className="font-semibold text-purple-800">Estimated Engagement</h4>
+                                <div className="p-3 rounded-lg bg-white/20 border border-white/30 inline-block mb-3">
+                                  <Activity className="w-8 h-8 text-white" />
+                                </div>
+                                <h4 className="font-semibold text-white/90">Estimated Engagement</h4>
                               </div>
-                              <Progress value={adAnalysis.performanceMetrics.estimatedEngagement} className="mb-2" />
-                              <span className="text-2xl font-bold text-purple-900">
+                              <Progress value={adAnalysis.performanceMetrics.estimatedEngagement} className="mb-3 h-2" />
+                              <span className="text-2xl font-bold text-white">
                                 {adAnalysis.performanceMetrics.estimatedEngagement.toFixed(1)}%
                               </span>
                             </div>
                             <div className="text-center">
                               <div className="mb-4">
-                                <TrendingUp className="w-12 h-12 text-green-600 mx-auto mb-2" />
-                                <h4 className="font-semibold text-green-800">Conversion Potential</h4>
+                                <div className="p-3 rounded-lg bg-white/20 border border-white/30 inline-block mb-3">
+                                  <TrendingUp className="w-8 h-8 text-white" />
+                                </div>
+                                <h4 className="font-semibold text-white/90">Conversion Potential</h4>
                               </div>
-                              <Progress value={adAnalysis.performanceMetrics.conversionPotential} className="mb-2" />
-                              <span className="text-2xl font-bold text-green-900">
+                              <Progress value={adAnalysis.performanceMetrics.conversionPotential} className="mb-3 h-2" />
+                              <span className="text-2xl font-bold text-white">
                                 {adAnalysis.performanceMetrics.conversionPotential.toFixed(1)}%
                               </span>
                             </div>
                             <div className="text-center">
                               <div className="mb-4">
-                                <Zap className="w-12 h-12 text-orange-600 mx-auto mb-2" />
-                                <h4 className="font-semibold text-orange-800">Virality Score</h4>
+                                <div className="p-3 rounded-lg bg-white/20 border border-white/30 inline-block mb-3">
+                                  <Zap className="w-8 h-8 text-white" />
+                                </div>
+                                <h4 className="font-semibold text-white/90">Virality Score</h4>
                               </div>
-                              <Progress value={adAnalysis.performanceMetrics.viralityScore} className="mb-2" />
-                              <span className="text-2xl font-bold text-orange-900">
+                              <Progress value={adAnalysis.performanceMetrics.viralityScore} className="mb-3 h-2" />
+                              <span className="text-2xl font-bold text-white">
                                 {adAnalysis.performanceMetrics.viralityScore.toFixed(1)}%
                               </span>
                             </div>
