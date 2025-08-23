@@ -8,6 +8,8 @@ import Pricing from '@/components/Pricing';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
+import CampaignShowcase from '@/components/CampaignShowcase';
+import GeneratedImagesShowcase from '@/components/GeneratedImagesShowcase';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
@@ -48,6 +50,8 @@ const Index = () => {
       </div>
       <main>
         <TrustedBy />
+        <CampaignShowcase />
+        <GeneratedImagesShowcase />
         <Services />
         <Solutions />
         <Pricing />
