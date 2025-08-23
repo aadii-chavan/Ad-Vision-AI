@@ -1,0 +1,169 @@
+# ========================================
+# DEPENDENCIES
+# ========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+jspm_packages/
+
+# ========================================
+# BUILD OUTPUTS
+# ========================================
+dist/
+dist-ssr/
+build/
+*.local
+
+# ========================================
+# ENVIRONMENT VARIABLES
+# ========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.example
+
+# ========================================
+# PYTHON
+# ========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+cover/
+
+# ========================================
+# FLASK
+# ========================================
+instance/
+.webassets-cache
+
+# ========================================
+# IDE AND EDITOR FILES
+# ========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========================================
+# OS GENERATED FILES
+# ========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ========================================
+# RUNTIME AND CACHE
+# ========================================
+pids
+*.pid
+*.seed
+*.pid.lock
+.npm
+.eslintcache
+.node_repl_history
+.cache
+.parcel-cache
+
+# ========================================
+# TESTING AND COVERAGE
+# ========================================
+coverage/
+*.lcov
+.nyc_output
+test-results/
+test-results.xml
+
+# ========================================
+# BUNDLER CACHE
+# ========================================
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# ========================================
+# FRAMEWORK SPECIFIC
+# ========================================
+.next
+.nuxt
+.out
+.storybook-out
+
+# ========================================
+# TEMPORARY FOLDERS
+# ========================================
+tmp/
+temp/
+
+# ========================================
+# DATABASE FILES
+# ========================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ========================================
+# BACKUP FILES
+# ========================================
+*.bak
+*.backup
+*.old
+
+# ========================================
+# LOCAL CONFIGURATION
+# ========================================
+config.local.js
+config.local.json
+
+# ========================================
+# PACKAGE MANAGER FILES
+# ========================================
+# Uncomment only one lock file to keep:
+# package-lock.json
+# pnpm-lock.yaml
+# bun.lockb
+.yarn-integrity
+
+# ========================================
+# LOGS
+# ========================================
+logs
+*.log
+.env
