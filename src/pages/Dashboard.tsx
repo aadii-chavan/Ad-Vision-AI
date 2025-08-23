@@ -1,10 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import MetricCards from '@/components/MetricCards';
-import MonthlyTargetCard from '@/components/MonthlyTargetCard';
-import MonthlySalesChart from '@/components/MonthlySalesChart';
-import StatisticsChart from '@/components/StatisticsChart';
 
 const Dashboard = () => {
   return (
@@ -35,24 +31,7 @@ const Dashboard = () => {
       <div className="flex-1 ml-64 pt-20 relative z-10">
         <div className="h-full overflow-y-auto">
           <main className="p-6">
-            {/* Top Row - Metric Cards and Monthly Target */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-              {/* Metric Cards - Takes 2 columns */}
-              <div className="lg:col-span-2">
-                <MetricCards />
-              </div>
-              
-              {/* Monthly Target Card - Takes 1 column */}
-              <div className="lg:col-span-1">
-                <MonthlyTargetCard />
-              </div>
-            </div>
-            
-            {/* Bottom Row - Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <MonthlySalesChart />
-              <StatisticsChart />
-            </div>
+            {/* Dashboard content will go here */}
           </main>
         </div>
       </div>
