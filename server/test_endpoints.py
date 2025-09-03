@@ -124,7 +124,7 @@ def main():
         print()
         
     except requests.exceptions.ConnectionError:
-        print("✗ Cannot connect to server. Make sure the backend is running on http://127.0.0.1:5000")
+        print("✗ Cannot connect to server. Make sure the backend is running on http://127.0.0.1:5001")
         print("Start the server with: cd server && python app.py")
     
     print("=" * 40)

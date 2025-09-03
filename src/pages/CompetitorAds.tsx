@@ -105,7 +105,7 @@ const CompetitorAds: React.FC = () => {
       params.append('offset', ((page - 1) * PAGE_SIZE).toString());
 
       // Use Python backend endpoint
-      const res = await fetch(`http://127.0.0.1:5000/api/fetch-ads?${params.toString()}`);
+      const res = await fetch(`http://127.0.0.1:5001/api/fetch-ads?${params.toString()}`);
       if (!res.ok) throw new Error('Failed to fetch ads');
       const data: Ad[] = await res.json();
       setAds(prev => opts?.append ? [...prev, ...data] : data);
