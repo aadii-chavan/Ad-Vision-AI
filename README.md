@@ -1,73 +1,166 @@
-# Welcome to your Lovable project
+# Ad-Vision-AI
 
-## Project info
+Ad-Vision-AI is a React + TypeScript frontend with a Python Flask backend that powers a marketing-focused AI assistant and competitor ads analysis toolkit. It integrates Google Gemini for text intelligence and optionally OpenAI DALL·E for image generation. The app includes mock competitor ad data and endpoints to analyze creatives and generate actionable insights.
 
-**URL**: https://lovable.dev/projects/36c750b6-591c-4e03-8190-09706b8159d5
+## Tech Stack
 
-## How can I edit this code?
+- Frontend: Vite, React, TypeScript, Tailwind CSS, shadcn/ui, React Router
+- Backend: Python, Flask, Flask-CORS
+- AI: Google Gemini 1.5 Flash (text), optional OpenAI DALL·E (images)
 
-There are several ways of editing your application.
+## Repository Structure
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/36c750b6-591c-4e03-8190-09706b8159d5) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+Ad-Vision-AI/
+  backend/                 # (Legacy) placeholder; active backend lives in /server
+  server/                  # Flask API (main backend)
+    app.py                 # Flask app with AI + mock ads endpoints
+    requirements.txt       # Python dependencies
+    env.example            # Example environment variables
+  src/                     # React app source
+    lib/chatApi.ts         # API client for chat/health endpoints
+    components/, pages/, ui/ ...
+  start-backend.sh         # Helper script to create venv and run backend
+  vite.config.ts           # Vite config (dev server on port 8080)
+  package.json             # Frontend scripts and deps
 ```
 
-**Edit a file directly in GitHub**
+## Prerequisites
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Node.js 18+ and npm/pnpm/yarn
+- Python 3.9+ (Python 3 recommended) and pip
 
-**Use GitHub Codespaces**
+## Environment Variables
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Create `server/.env` based on `server/env.example`:
 
-## What technologies are used for this project?
+```
+# Required for Gemini-based endpoints
+GEMINI_APIKEY=your_gemini_api_key_here
 
-This project is built with:
+# Optional: for DALL·E image generation endpoint
+OPENAI_API_KEY=your_openai_api_key_here
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Optional: server port (default 5001)
+PORT=5001
+```
 
-## How can I deploy this project?
+Note: `HUGGING_FACE_ACCESS_TOKEN` is present in the example but not used by the active Flask app.
 
-Simply open [Lovable](https://lovable.dev/projects/36c750b6-591c-4e03-8190-09706b8159d5) and click on Share -> Publish.
+## Install and Run
 
-## Can I connect a custom domain to my Lovable project?
+### 1) Backend
 
-Yes, you can!
+Using helper script (creates a venv under `server/venv`, installs deps, runs on port 5001):
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+chmod +x start-backend.sh
+./start-backend.sh
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Manual steps:
+
+```bash
+python3 -m venv server/venv
+source server/venv/bin/activate
+pip install -r server/requirements.txt
+python server/app.py
+```
+
+Health check: open `http://localhost:5001/api/health`.
+
+### 2) Frontend
+
+Install dependencies and start Vite (dev server on port 8080):
+
+```bash
+npm install
+npm run dev
+# or: pnpm install && pnpm dev
+```
+
+Open `http://localhost:8080`.
+
+#### Important (API base URL during development)
+
+The frontend currently calls relative paths like `/api/...` (see `src/lib/chatApi.ts`). In dev, Vite runs on `http://localhost:8080` and the Flask server on `http://localhost:5001`. To make requests work in dev, choose one of:
+
+1. Configure a Vite proxy (recommended):
+   - Add a proxy to `vite.config.ts` under `server`:
+     ```ts
+     server: {
+       host: "::",
+       port: 8080,
+       proxy: {
+         "/api": "http://localhost:5001"
+       }
+     }
+     ```
+2. Use absolute URLs in the client:
+   - Temporarily change fetch calls to `http://localhost:5001/api/...` while developing.
+   - Or refactor to use an environment variable (e.g., `import.meta.env.VITE_API_BASE_URL`).
+
+## API Overview (Flask, `server/app.py`)
+
+- GET `/api/health` — API and Gemini configuration status
+- POST `/api/chat` — Basic chat
+  - Body: `{ "question": "string" }`
+  - Returns: `{ "answer": "string" }`
+- GET `/api/fetch-ads` — Mock ads with filters
+  - Query: `q`, `country`, `impressions_min|max`, `spend_min|max`, `limit`, `offset`
+- GET `/api/filter-options` — Options for business types, categories, countries
+- POST `/api/analyze-ads` — Gemini-powered analysis of selected ads (falls back to mock)
+  - Body: `{ "ads": [ ... ] }`
+  - Returns: array of analyses with marketing, emotional, sentiment, hooks, performance
+- POST `/api/generate-insights` — Gemini-powered insights from analyses (falls back to mock)
+  - Body: `{ "analysis": [ ... ] }`
+- POST `/api/generate-campaign-strategy` — Strategy JSON from insights + campaign data (mock if no key)
+  - Body: `{ insights: {...}, campaignData: {...} }`
+- POST `/api/generate-campaign-image` — Generate campaign image via DALL·E (mock URL without key)
+  - Body: `{ campaign: {...}, insights: {...} }`
+
+Notes:
+- Most AI endpoints provide mock responses if `GEMINI_APIKEY`/`OPENAI_API_KEY` isn’t set.
+- CORS is enabled with `*` in the backend.
+
+## Frontend Notes
+
+- Dev server: `vite.config.ts` uses port 8080.
+- API client: see `src/lib/chatApi.ts`.
+- UI: shadcn/ui components under `src/components/ui/`.
+
+## Scripts
+
+From `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start:backend": "cd server && python app.py"
+  }
+}
+```
+
+You can also run the backend via the helper script `./start-backend.sh`.
+
+## Production
+
+1. Build frontend: `npm run build`
+2. Serve built assets from a static host
+3. Deploy Flask API separately (ensure `GEMINI_APIKEY`/`OPENAI_API_KEY` are set)
+4. Point the frontend’s API base to your deployed backend (proxy or absolute URL)
+
+## Troubleshooting
+
+- 404 on `/api/...` in dev: set up the Vite proxy or use absolute backend URLs.
+- 503 or error from AI endpoints: ensure `server/.env` contains valid `GEMINI_APIKEY` and the backend process has access to it.
+- CORS errors: confirm you are calling the backend at the correct origin and that the backend is running.
+
+## License
+
+Proprietary/Unspecified. Add a license if needed.
